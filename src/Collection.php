@@ -34,11 +34,17 @@ class Collection implements \Iterator, \Countable
         return $this->getObject();
     }
 
+    /**
+     * @return array
+     */
     public function getRawData()
     {
         return $this->rawData;
     }
 
+    /**
+     * @return Collection
+     */
     public function rewind()
     {
         $this->pointer = 0;
@@ -54,6 +60,9 @@ class Collection implements \Iterator, \Countable
         return $object;
     }
 
+    /**
+     * @return int
+     */
     public function key()
     {
         return $this->pointer;
