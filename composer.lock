@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "g4/factory",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/g4code/factory.git",
-                "reference": "cf02d792d3f51dbbe74aa5bd21b8dda8760aaab6"
+                "reference": "b3798a03937186e1025dd1c4d494125c0af74c1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/g4code/factory/zipball/cf02d792d3f51dbbe74aa5bd21b8dda8760aaab6",
-                "reference": "cf02d792d3f51dbbe74aa5bd21b8dda8760aaab6",
+                "url": "https://api.github.com/repos/g4code/factory/zipball/b3798a03937186e1025dd1c4d494125c0af74c1c",
+                "reference": "b3798a03937186e1025dd1c4d494125c0af74c1c",
                 "shasum": ""
             },
             "require": {
@@ -63,7 +63,7 @@
                 "mapping",
                 "reconstitute"
             ],
-            "time": "2015-11-30 21:30:53"
+            "time": "2015-12-01 15:31:20"
         }
     ],
     "packages-dev": [
