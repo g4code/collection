@@ -62,12 +62,29 @@ class CollectionTest extends PHPUnit_Framework_TestCase
             $domains[] = $domain;
         }
         $this->assertEquals(2, count($domains));
+        $this->assertEquals($this->getMockForDomainEntity(), $domains[0]);
+        $this->assertEquals($this->getMockForDomainEntity(), $domains[1]);
     }
 
     public function testNext()
     {
         $this->assertEquals($this->getMockForDomainEntity(), $this->collection->next());
         $this->assertEquals(1, $this->collection->key());
+    }
+
+    public function testRewind()
+    {
+        $this->collection->rewind();
+        $this->assertEquals(0, $this->collection->key());
+    }
+
+    public function testValid()
+    {
+        $this->assertTrue($this->collection->valid());
+        $this->collection->next();
+        $this->assertTrue($this->collection->valid());
+        $this->collection->next();
+        $this->assertFalse($this->collection->valid());
     }
 
     private function getMockForFactoryReconstituteInterface()

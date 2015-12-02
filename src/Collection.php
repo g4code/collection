@@ -15,6 +15,11 @@ class Collection implements \Iterator, \Countable
     /**
      * @var array
      */
+    private $keyMap;
+
+    /**
+     * @var array
+     */
     private $objects;
 
     /**
@@ -38,11 +43,11 @@ class Collection implements \Iterator, \Countable
      */
     public function __construct(array $rawData, ReconstituteInterface $factory)
     {
+        $this->factory = $factory;
+        $this->keyMap  = array_keys($rawData);
         $this->objects = [];
         $this->pointer = 0;
         $this->rawData = $rawData;
-        $this->factory = $factory;
-
     }
 
     /**
@@ -69,10 +74,9 @@ class Collection implements \Iterator, \Countable
         return $this->rawData;
     }
 
-    public function rewind()
+    public function key()
     {
-        $this->pointer = 0;
-        return $this;
+        return $this->pointer;
     }
 
     public function next()
@@ -84,9 +88,10 @@ class Collection implements \Iterator, \Countable
         return $object;
     }
 
-    public function key()
+    public function rewind()
     {
-        return $this->pointer;
+        $this->pointer = 0;
+        return $this;
     }
 
     public function valid()
@@ -96,9 +101,16 @@ class Collection implements \Iterator, \Countable
 
     private function addCurrentRawDataToObjects()
     {
-        $this->factory->set($this->getCurrentRawData());
+        $this->factory->set($this->currentRawData());
         $this->objects[$this->pointer] = $this->factory->reconstitute();
-        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    private function currentRawData()
+    {
+        return $this->rawData[$this->keyMap[$this->pointer]];
     }
 
     private function getObject()
@@ -116,19 +128,20 @@ class Collection implements \Iterator, \Countable
         return null;
     }
 
-    private function getCurrentRawData()
-    {
-        return $this->rawData[$this->pointer];
-    }
-
+    /**
+     * @return bool
+     */
     private function hasCurrentObject()
     {
         return isset($this->objects[$this->pointer]);
     }
 
+    /**
+     * @return bool
+     */
     private function hasCurrentRawData()
     {
-        return isset($this->rawData[$this->pointer]);
+        return isset($this->rawData[$this->keyMap[$this->pointer]]);
     }
 
     private function currentObject()
