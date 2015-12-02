@@ -7,25 +7,52 @@ use G4\Factory\ReconstituteInterface;
 class Collection implements \Iterator, \Countable
 {
 
-    private $objects = [];
-
-    private $rawData;
-
-    private $total = 0;
-
-    private $pointer = 0;
-
+    /**
+     * @var ReconstituteInterface
+     */
     private $factory;
 
+    /**
+     * @var array
+     */
+    private $objects;
+
+    /**
+     * @var int
+     */
+    private $pointer;
+
+    /**
+     * @var array
+     */
+    private $rawData;
+
+    /**
+     * @var int
+     */
+    private $total;
+
+    /**
+     * @param array $rawData
+     * @param ReconstituteInterface $factory
+     */
     public function __construct(array $rawData, ReconstituteInterface $factory)
     {
+        $this->objects = [];
+        $this->pointer = 0;
         $this->rawData = $rawData;
         $this->factory = $factory;
-        $this->total = count($rawData);
+
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
+        if ($this->total === null) {
+            $this->total = count($this->rawData);
+        }
         return $this->total;
     }
 
@@ -42,9 +69,6 @@ class Collection implements \Iterator, \Countable
         return $this->rawData;
     }
 
-    /**
-     * @return Collection
-     */
     public function rewind()
     {
         $this->pointer = 0;
@@ -54,15 +78,12 @@ class Collection implements \Iterator, \Countable
     public function next()
     {
         $object = $this->getObject();
-        if(!empty($object)){
-            $this->incrementPointer();
+        if ($object !== null) {
+            $this->pointer++;
         }
         return $object;
     }
 
-    /**
-     * @return int
-     */
     public function key()
     {
         return $this->pointer;
@@ -70,34 +91,26 @@ class Collection implements \Iterator, \Countable
 
     public function valid()
     {
-        return !is_null( $this->current() );
+        return $this->current() !== null;
     }
 
-    public function incrementPointer()
+    private function addCurrentRawDataToObjects()
     {
-        $this->pointer++;
-        return $this;
-    }
-
-    private function addToObject($data)
-    {
-        $this->objects[$this->pointer] = $this
-            ->factory
-            ->set($data)
-            ->reconstitute();
+        $this->factory->set($this->getCurrentRawData());
+        $this->objects[$this->pointer] = $this->factory->reconstitute();
         return $this;
     }
 
     private function getObject()
     {
-        if ($this->pointer >= $this->total || $this->pointer < 0) {
+        if ($this->pointer >= $this->count()) {
             return null;
         }
         if($this->hasCurrentObject()){
             return $this->currentObject();
         }
         if($this->hasCurrentRawData()){
-            $this->addToObject($this->getCurrentRawData());
+            $this->addCurrentRawDataToObjects();
             return $this->currentObject();
         }
         return null;
@@ -120,9 +133,8 @@ class Collection implements \Iterator, \Countable
 
     private function currentObject()
     {
-        return isset($this->objects[$this->pointer])
+        return $this->hasCurrentObject()
             ? $this->objects[$this->pointer]
             : null;
     }
-
 }

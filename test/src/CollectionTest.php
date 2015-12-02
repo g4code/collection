@@ -19,16 +19,16 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->data = [
-            [
+            0 => [
                 'id' => 1,
                 'data' => 'lorem ipsum',
             ],
-            [
+            2 => [
                 'id' => 2,
                 'data' => 'lorem ipsum',
             ],
         ];
-        $this->collection = new Collection($this->data, $this->getMock('\G4\Factory\ReconstituteInterface'));
+        $this->collection = new Collection($this->data, $this->getMockForFactoryReconstituteInterface());
     }
 
     protected function tearDown()
@@ -41,13 +41,56 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     public function testCount()
     {
         $this->assertEquals(2, count($this->collection));
-
-        $this->assertEquals(0, count(new Collection([], $this->getMock('\G4\Factory\ReconstituteInterface'))));
+        $this->assertEquals(0, count(new Collection([], $this->getMockForFactoryReconstituteInterface())));
     }
 
     public function testCurrent()
     {
-        $this->collection->current();
+        $this->assertEquals($this->getMockForDomainEntity(), $this->collection->current());
+        $this->assertEquals(0, $this->collection->key());
     }
 
+    public function testGetRawData()
+    {
+        $this->assertEquals($this->data, $this->collection->getRawData());
+    }
+
+    public function testIteration()
+    {
+        $domains = [];
+        foreach($this->collection as $domain) {
+            $domains[] = $domain;
+        }
+        $this->assertEquals(2, count($domains));
+    }
+
+    public function testNext()
+    {
+        $this->assertEquals($this->getMockForDomainEntity(), $this->collection->next());
+        $this->assertEquals(1, $this->collection->key());
+    }
+
+    private function getMockForFactoryReconstituteInterface()
+    {
+        $mock = $this->getMockBuilder('\G4\Factory\ReconstituteInterface')
+            ->setMethods(['set', 'reconstitute'])
+            ->getMock('\G4\Factory\ReconstituteInterface');
+
+        $mock
+            ->expects($this->any())
+            ->method('set');
+
+        $mock
+            ->expects($this->any())
+            ->method('reconstitute')
+            ->willReturn($this->getMockForDomainEntity());
+
+        return $mock;
+    }
+
+    private function getMockForDomainEntity()
+    {
+        $mock = $this->getMockBuilder('Domain')->getMock();
+        return $mock;
+    }
 }
