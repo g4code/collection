@@ -5,17 +5,19 @@ collection
 
 ## Install
 
+    $ composer require g4/collection
+
 ## Usage
 
 ## Development
 
 ### Install dependencies
 
-    $ make install
+    $ composer install
 
 ### Run tests
 
-    $ make test
+    $ composer test
 
 ## License
 
