@@ -61,9 +61,22 @@ class Collection implements \Iterator, \Countable
         return $this->total;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function current()
     {
-        return $this->getObject();
+        if ($this->pointer >= $this->count()) {
+            return null;
+        }
+        if($this->hasCurrentObject()){
+            return $this->currentObject();
+        }
+        if($this->hasCurrentRawData()){
+            $this->addCurrentRawDataToObjects();
+            return $this->currentObject();
+        }
+        return null;
     }
 
     /**
@@ -74,6 +87,9 @@ class Collection implements \Iterator, \Countable
         return $this->rawData;
     }
 
+    /**
+     * @return int
+     */
     public function key()
     {
         return $this->pointer;
@@ -81,8 +97,7 @@ class Collection implements \Iterator, \Countable
 
     public function next()
     {
-        $object = $this->getObject();
-        if ($object !== null) {
+        if ($this->pointer < $this->count()) {
             $this->pointer++;
         }
     }
@@ -92,6 +107,9 @@ class Collection implements \Iterator, \Countable
         $this->pointer = 0;
     }
 
+    /**
+     * @return bool
+     */
     public function valid()
     {
         return $this->current() !== null;
@@ -111,21 +129,6 @@ class Collection implements \Iterator, \Countable
         return $this->rawData[$this->keyMap[$this->pointer]];
     }
 
-    private function getObject()
-    {
-        if ($this->pointer >= $this->count()) {
-            return null;
-        }
-        if($this->hasCurrentObject()){
-            return $this->currentObject();
-        }
-        if($this->hasCurrentRawData()){
-            $this->addCurrentRawDataToObjects();
-            return $this->currentObject();
-        }
-        return null;
-    }
-
     /**
      * @return bool
      */
@@ -142,6 +145,9 @@ class Collection implements \Iterator, \Countable
         return isset($this->rawData[$this->keyMap[$this->pointer]]);
     }
 
+    /**
+     * @return mixed|null
+     */
     private function currentObject()
     {
         return $this->hasCurrentObject()

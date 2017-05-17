@@ -70,6 +70,9 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     {
         $this->collection->next();
         $this->assertEquals(1, $this->collection->key());
+        $this->collection->next();
+        $this->assertNull($this->collection->current());
+        $this->assertEquals(2, $this->collection->key());
     }
 
     public function testRewind()
