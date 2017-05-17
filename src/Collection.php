@@ -85,13 +85,11 @@ class Collection implements \Iterator, \Countable
         if ($object !== null) {
             $this->pointer++;
         }
-        return $object;
     }
 
     public function rewind()
     {
         $this->pointer = 0;
-        return $this;
     }
 
     public function valid()

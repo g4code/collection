@@ -68,7 +68,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase
 
     public function testNext()
     {
-        $this->assertEquals($this->getMockForDomainEntity(), $this->collection->next());
+        $this->collection->next();
         $this->assertEquals(1, $this->collection->key());
     }
 
