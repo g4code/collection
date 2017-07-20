@@ -76,7 +76,6 @@ class Collection implements \Iterator, \Countable
             $this->addCurrentRawDataToObjects();
             return $this->currentObject();
         }
-        return null;
     }
 
     /**
