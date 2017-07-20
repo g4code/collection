@@ -37,8 +37,8 @@
         "g4/factory": "1.*"
     },
     "scripts": {
-        "test": [
-            "vendor/bin/phpunit -c test/phpunit.xml"
+        "unit-test": [
+            "vendor/bin/phpunit -c tests/unit/phpunit.xml --coverage-html tests/unit/coverage --colors=always"
         ]
     }
 }
