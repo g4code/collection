@@ -86,6 +86,11 @@ class Collection implements \Iterator, \Countable
         return $this->rawData;
     }
 
+    public function hasData()
+    {
+        return $this->count() > 0;
+    }
+
     /**
      * @return int
      */

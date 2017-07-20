@@ -55,6 +55,14 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->data, $this->collection->getRawData());
     }
 
+    public function testHasData()
+    {
+        $this->assertTrue($this->collection->hasData());
+
+        $collection = new Collection([], $this->getMockForFactoryReconstituteInterface());
+        $this->assertFalse($collection->hasData());
+    }
+
     public function testIteration()
     {
         $domains = [];
