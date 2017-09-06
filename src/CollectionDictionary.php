@@ -171,7 +171,7 @@ class CollectionDictionary implements \Iterator, \Countable
      */
     private function addCurrentRawDataToObjects()
     {
-        $this->factory->set($this->currentRawData());
+        $this->factory->set(new Dictionary($this->currentRawData()));
         $this->objects[$this->pointer] = $this->factory->reconstitute();
     }
 
