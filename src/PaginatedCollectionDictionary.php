@@ -2,35 +2,37 @@
 
 namespace G4\Collection;
 
+use G4\ValueObject\IntegerNumber;
+
 class PaginatedCollectionDictionary extends CollectionDictionary implements \Iterator, \Countable
 {
     /**
-     * @var int
+     * @var IntegerNumber
      */
     private $currentItemsCount;
 
     /**
-     * @var int
+     * @var IntegerNumber
      */
     private $currentPageNumber;
 
     /**
-     * @var int
+     * @var IntegerNumber
      */
     private $itemsCountPerPage;
 
     /**
-     * @var int
+     * @var IntegerNumber
      */
     private $pageCount;
 
     /**
-     * @var int
+     * @var IntegerNumber
      */
     private $totalItemsCount;
 
     /**
-     * @return int
+     * @return IntegerNumber
      */
     public function getCurrentItemsCount()
     {
@@ -38,7 +40,7 @@ class PaginatedCollectionDictionary extends CollectionDictionary implements \Ite
     }
 
     /**
-     * @return int
+     * @return IntegerNumber
      */
     public function getCurrentPageNumber()
     {
@@ -46,7 +48,7 @@ class PaginatedCollectionDictionary extends CollectionDictionary implements \Ite
     }
 
     /**
-     * @return int
+     * @return IntegerNumber
      */
     public function getItemsCountPerPage()
     {
@@ -54,7 +56,7 @@ class PaginatedCollectionDictionary extends CollectionDictionary implements \Ite
     }
 
     /**
-     * @return int
+     * @return IntegerNumber
      */
     public function getPageCount()
     {
@@ -62,7 +64,7 @@ class PaginatedCollectionDictionary extends CollectionDictionary implements \Ite
     }
 
     /**
-     * @return int
+     * @return IntegerNumber
      */
     public function getTotalItemsCount()
     {
@@ -70,50 +72,50 @@ class PaginatedCollectionDictionary extends CollectionDictionary implements \Ite
     }
 
     /**
-     * @param $currentItemsCount int
+     * @param IntegerNumber $currentItemsCount
      * @return $this
      */
-    public function setCurrentItemsCount($currentItemsCount)
+    public function setCurrentItemsCount(IntegerNumber $currentItemsCount)
     {
         $this->currentItemsCount = $currentItemsCount;
         return $this;
     }
 
     /**
-     * @param $currentPageNumber int
+     * @param IntegerNumber $currentPageNumber
      * @return $this
      */
-    public function setCurrentPageNumber($currentPageNumber)
+    public function setCurrentPageNumber(IntegerNumber $currentPageNumber)
     {
         $this->currentPageNumber = $currentPageNumber;
         return $this;
     }
 
     /**
-     * @param $itemsCountPerPage int
+     * @param IntegerNumber $itemsCountPerPage
      * @return $this
      */
-    public function setItemsCountPerPage($itemsCountPerPage)
+    public function setItemsCountPerPage(IntegerNumber $itemsCountPerPage)
     {
         $this->itemsCountPerPage = $itemsCountPerPage;
         return $this;
     }
 
     /**
-     * @param $pageCount int
+     * @param IntegerNumber $pageCount
      * @return $this
      */
-    public function setPageCount($pageCount)
+    public function setPageCount(IntegerNumber $pageCount)
     {
         $this->pageCount = $pageCount;
         return $this;
     }
 
     /**
-     * @param $totalItemsCount int
+     * @param IntegerNumber $totalItemsCount
      * @return $this
      */
-    public function setTotalItemsCount($totalItemsCount)
+    public function setTotalItemsCount(IntegerNumber $totalItemsCount)
     {
         $this->totalItemsCount = $totalItemsCount;
         return $this;

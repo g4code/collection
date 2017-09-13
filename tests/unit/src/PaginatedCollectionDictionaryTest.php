@@ -1,6 +1,7 @@
 <?php
 
 use G4\ValueObject\Dictionary;
+use G4\ValueObject\IntegerNumber;
 use G4\Collection\PaginatedCollectionDictionary;
 
 class PaginatedCollectionDictionaryTest extends PHPUnit_Framework_TestCase
@@ -20,9 +21,35 @@ class PaginatedCollectionDictionaryTest extends PHPUnit_Framework_TestCase
      */
     private $fixture;
 
+    private $pageCountMock;
+    private $totalItemsCountMock;
+    private $itemsCountPerPageMock;
+    private $currentPageNumberMock;
+    private $currentItemsCountMock;
+
     protected function setUp()
     {
         $this->dataMock = $this->getMockBuilder(Dictionary::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->currentItemsCountMock = $this->getMockBuilder(IntegerNumber::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->currentPageNumberMock = $this->getMockBuilder(IntegerNumber::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->itemsCountPerPageMock = $this->getMockBuilder(IntegerNumber::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->pageCountMock = $this->getMockBuilder(IntegerNumber::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->totalItemsCountMock = $this->getMockBuilder(IntegerNumber::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -47,39 +74,69 @@ class PaginatedCollectionDictionaryTest extends PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        $this->fixture      = null;
-        $this->dataMock     = null;
-        $this->collection   = null;
+        $this->fixture                  = null;
+        $this->dataMock                 = null;
+        $this->collection               = null;
+        $this->pageCountMock            = null;
+        $this->totalItemsCountMock      = null;
+        $this->itemsCountPerPageMock    = null;
+        $this->currentItemsCountMock    = null;
+        $this->currentPageNumberMock    = null;
     }
 
     public function testCurrentItemsCount()
     {
-        $this->collection->setCurrentItemsCount($this->fixture);
-        $this->assertEquals($this->fixture, $this->collection->getCurrentItemsCount());
+        $this->currentItemsCountMock
+            ->expects($this->once())
+            ->method('getValue')
+            ->willReturn($this->fixture);
+
+        $this->collection->setCurrentItemsCount($this->currentItemsCountMock);
+        $this->assertEquals($this->fixture, $this->collection->getCurrentItemsCount()->getValue());
     }
 
     public function testCurrentPageNumber()
     {
-        $this->collection->setCurrentPageNumber($this->fixture);
-        $this->assertEquals($this->fixture, $this->collection->getCurrentPageNumber());
+        $this->currentPageNumberMock
+            ->expects($this->once())
+            ->method('getValue')
+            ->willReturn($this->fixture);
+
+        $this->collection->setCurrentPageNumber($this->currentPageNumberMock);
+        $this->assertEquals($this->fixture, $this->collection->getCurrentPageNumber()->getValue());
     }
 
     public function testItemsCountPerPage()
     {
-        $this->collection->setItemsCountPerPage($this->fixture);
-        $this->assertEquals($this->fixture, $this->collection->getItemsCountPerPage());
+        $this->itemsCountPerPageMock
+            ->expects($this->once())
+            ->method('getValue')
+            ->willReturn($this->fixture);
+
+        $this->collection->setItemsCountPerPage($this->itemsCountPerPageMock);
+        $this->assertEquals($this->fixture, $this->collection->getItemsCountPerPage()->getValue());
     }
 
     public function testPageCount()
     {
-        $this->collection->setPageCount($this->fixture);
-        $this->assertEquals($this->fixture, $this->collection->getPageCount());
+        $this->pageCountMock
+            ->expects($this->once())
+            ->method('getValue')
+            ->willReturn($this->fixture);
+
+        $this->collection->setPageCount($this->pageCountMock);
+        $this->assertEquals($this->fixture, $this->collection->getPageCount()->getValue());
     }
 
     public function testTotalItemsCount()
     {
-        $this->collection->setTotalItemsCount($this->fixture);
-        $this->assertEquals($this->fixture, $this->collection->getTotalItemsCount());
+        $this->totalItemsCountMock
+            ->expects($this->once())
+            ->method('getValue')
+            ->willReturn($this->fixture);
+
+        $this->collection->setTotalItemsCount($this->totalItemsCountMock);
+        $this->assertEquals($this->fixture, $this->collection->getTotalItemsCount()->getValue());
     }
 
     private function getMockForFactoryReconstituteInterface()
