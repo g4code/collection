@@ -78,11 +78,11 @@ class CollectionDictionary implements \Iterator, \Countable
             return null;
         }
 
-        if($this->hasCurrentObject()){
+        if ($this->hasCurrentObject()) {
             return $this->currentObject();
         }
 
-        if($this->hasCurrentRawData()){
+        if ($this->hasCurrentRawData()) {
             $this->addCurrentRawDataToObjects();
             return $this->currentObject();
         }
