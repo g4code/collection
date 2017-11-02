@@ -53,6 +53,9 @@
         ],
         "psr2": [
             "./vendor/bin/phpcs --colors --standard=PSR2 src/"
+        ],
+        "psr2-fix": [
+            "./vendor/bin/phpcbf --colors --standard=PSR2 src/"
         ]
     }
 }

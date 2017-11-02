@@ -69,10 +69,10 @@ class Collection implements \Iterator, \Countable
         if ($this->pointer >= $this->count()) {
             return null;
         }
-        if($this->hasCurrentObject()){
+        if ($this->hasCurrentObject()) {
             return $this->currentObject();
         }
-        if($this->hasCurrentRawData()){
+        if ($this->hasCurrentRawData()) {
             $this->addCurrentRawDataToObjects();
             return $this->currentObject();
         }

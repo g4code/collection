@@ -2,7 +2,6 @@
 
 namespace G4\Collection;
 
-
 class PaginatedCollection extends Collection implements \Iterator, \Countable
 {
 
@@ -121,5 +120,4 @@ class PaginatedCollection extends Collection implements \Iterator, \Countable
         $this->totalItemsCount = $totalItemsCount;
         return $this;
     }
-
 }
