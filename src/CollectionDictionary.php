@@ -143,6 +143,15 @@ class CollectionDictionary implements \Iterator, \Countable
     }
 
     /**
+     * @return $this
+     */
+    public function keyMapReverseOrder()
+    {
+        $this->keyMap = array_reverse($this->keyMap);
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     private function hasCurrentRawData()
