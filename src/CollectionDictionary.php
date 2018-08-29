@@ -161,12 +161,12 @@ class CollectionDictionary implements \Iterator, \Countable
     }
 
     /**
-     * @param ArrayList $algorithmList
+     * @param ArrayList $arrayList
      * @return $this
      */
-    public function reduce(ArrayList $algorithmList)
+    public function reduce(ArrayList $arrayList)
     {
-        $this->keyMap = array_values($algorithmList->getAll());
+        $this->keyMap = array_values($arrayList->getAll());
         return $this;
     }
 
