@@ -2,6 +2,7 @@
 
 namespace G4\Collection;
 
+use G4\ValueObject\ArrayList;
 use G4\ValueObject\Dictionary;
 use G4\Factory\ReconstituteInterface;
 
@@ -143,11 +144,29 @@ class CollectionDictionary implements \Iterator, \Countable
     }
 
     /**
+     * @return array
+     */
+    public function getKeyMap()
+    {
+        return $this->keyMap;
+    }
+
+    /**
      * @return $this
      */
     public function keyMapReverseOrder()
     {
         $this->keyMap = array_reverse($this->keyMap);
+        return $this;
+    }
+
+    /**
+     * @param ArrayList $algorithmList
+     * @return $this
+     */
+    public function reduce(ArrayList $algorithmList)
+    {
+        $this->keyMap = array_values($algorithmList->getAll());
         return $this;
     }
 
