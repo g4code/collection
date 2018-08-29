@@ -1,5 +1,6 @@
 <?php
 
+use G4\ValueObject\ArrayList;
 use G4\ValueObject\Dictionary;
 use G4\Collection\CollectionDictionary;
 
@@ -94,6 +95,17 @@ class CollectionDictionaryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->collection->valid());
         $this->collection->next();
         $this->assertFalse($this->collection->valid());
+    }
+
+    public function testReduce()
+    {
+        $reduce = new ArrayList([
+            2,
+        ]);
+
+        $slicedResources = $this->collection->reduce($reduce);
+        $this->assertCount(1, $slicedResources->getKeyMap());
+        $this->assertEquals($reduce->getAll(), $slicedResources->getKeyMap());
     }
 
     private function getMockForFactoryReconstituteInterface()
