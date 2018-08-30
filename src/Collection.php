@@ -2,6 +2,7 @@
 
 namespace G4\Collection;
 
+use G4\ValueObject\ArrayList;
 use G4\Factory\ReconstituteInterface;
 
 class Collection implements \Iterator, \Countable
@@ -84,6 +85,33 @@ class Collection implements \Iterator, \Countable
     public function getRawData()
     {
         return $this->rawData;
+    }
+
+    /**
+     * @return array
+     */
+    public function getKeyMap()
+    {
+        return $this->keyMap;
+    }
+
+    /**
+     * @return $this
+     */
+    public function keyMapReverseOrder()
+    {
+        $this->keyMap = array_reverse($this->keyMap);
+        return $this;
+    }
+
+    /**
+     * @param ArrayList $algorithmList
+     * @return $this
+     */
+    public function reduce(ArrayList $algorithmList)
+    {
+        $this->keyMap = array_values($algorithmList->getAll());
+        return $this;
     }
 
     public function hasData()
