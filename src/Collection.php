@@ -146,7 +146,7 @@ class Collection implements \Iterator, \Countable
      */
     private function hasCurrentRawData()
     {
-        return isset($this->rawData[$this->keyMap[$this->pointer]]);
+        return isset($this->keyMap[$this->pointer]) && isset($this->rawData[$this->keyMap[$this->pointer]]);
     }
 
     /**
