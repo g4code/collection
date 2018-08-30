@@ -1,5 +1,6 @@
 <?php
 
+use G4\ValueObject\ArrayList;
 use G4\Collection\Collection;
 
 class CollectionTest extends PHPUnit_Framework_TestCase
@@ -73,6 +74,25 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->getMockForDomainEntity(), $domains[0]);
         $this->assertEquals($this->getMockForDomainEntity(), $domains[1]);
     }
+
+    public function testKeyMapReverseOrder()
+    {
+        $this->assertEquals([0=>0, 1=>2], $this->collection->getKeyMap());
+
+        $this->collection->keyMapReverseOrder();
+        $this->assertEquals([0=>2, 1=>0], $this->collection->getKeyMap());
+    }
+
+    public function testIterationReduced()
+    {
+        $this->collection->reduce(new ArrayList([2]));
+        $domains = [];
+        foreach($this->collection as $domain) {
+            $domains[] = $domain;
+        }
+        $this->assertEquals(1, count($domains));
+        $this->assertEquals($this->getMockForDomainEntity(), $domains[0]);
+}
 
     public function testNext()
     {

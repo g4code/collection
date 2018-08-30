@@ -73,6 +73,17 @@ class CollectionDictionaryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->getMockForDomainEntity(), $domains[1]);
     }
 
+    public function testIterationReduced()
+    {
+        $this->collection->reduce(new ArrayList([2]));
+        $domains = [];
+        foreach($this->collection as $domain) {
+            $domains[] = $domain;
+        }
+        $this->assertEquals(1, count($domains));
+        $this->assertEquals($this->getMockForDomainEntity(), $domains[0]);
+    }
+
     public function testNext()
     {
         $this->collection->next();
@@ -95,6 +106,14 @@ class CollectionDictionaryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->collection->valid());
         $this->collection->next();
         $this->assertFalse($this->collection->valid());
+    }
+
+    public function testKeyMapReverseOrder()
+    {
+        $this->assertEquals([0=>0, 1=>2], $this->collection->getKeyMap());
+
+        $this->collection->keyMapReverseOrder();
+        $this->assertEquals([0=>2, 1=>0], $this->collection->getKeyMap());
     }
 
     public function testReduce()
