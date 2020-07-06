@@ -1,6 +1,7 @@
 <?php
 
 use G4\Collection\PaginatedCollection;
+use G4\ValueObject\Dictionary;
 
 class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
 {
@@ -13,7 +14,7 @@ class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
     /**
      * @var array
      */
-    private $data;
+    private $dataMock;
 
     /**
      * @var int
@@ -23,24 +24,33 @@ class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $this->dataMock = $this->getMockBuilder(Dictionary::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->fixture = 23;
-        $this->data = [
-            0 => [
-                'id' => 1,
-                'data' => 'lorem ipsum',
-            ],
-            2 => [
-                'id' => 2,
-                'data' => 'lorem ipsum',
-            ],
-        ];
-        $this->collection = new PaginatedCollection($this->data, $this->getMockForFactoryReconstituteInterface());
+
+        $this->dataMock
+            ->expects($this->any())
+            ->method('getAll')
+            ->willReturn([
+                0 => [
+                    'id' => 1,
+                    'data' => 'lorem ipsum',
+                ],
+                2 => [
+                    'id' => 2,
+                    'data' => 'lorem ipsum',
+                ]
+            ]);
+
+        $this->collection = new PaginatedCollection($this->dataMock->getAll(), $this->getMockForFactoryReconstituteInterface());
     }
 
     protected function tearDown()
     {
         $this->fixture      = null;
-        $this->data         = null;
+        $this->dataMock     = null;
         $this->collection   = null;
     }
 
@@ -72,6 +82,26 @@ class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
     {
         $this->collection->setTotalItemsCount($this->fixture);
         $this->assertEquals($this->fixture, $this->collection->getTotalItemsCount());
+    }
+
+    public function testMap()
+    {
+        $this->collection->setCurrentPageNumber($this->fixture);
+        $this->collection->setTotalItemsCount($this->fixture);
+        $this->collection->setItemsCountPerPage($this->fixture);
+        $this->collection->setCurrentItemsCount($this->fixture);
+        $this->collection->setPageCount($this->fixture);
+
+        $map = [
+            'current_items'         => $this->dataMock->getAll(),
+            'current_page_number'   => $this->fixture,
+            'total_item_count'      => $this->fixture,
+            'item_count_per_page'   => $this->fixture,
+            'current_item_count'    => $this->fixture,
+            'page_count'            => $this->fixture,
+        ];
+
+        $this->assertEquals($map, $this->collection->map());
     }
 
     private function getMockForFactoryReconstituteInterface()

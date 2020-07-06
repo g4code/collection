@@ -120,4 +120,16 @@ class PaginatedCollectionDictionary extends CollectionDictionary implements \Ite
         $this->totalItemsCount = $totalItemsCount;
         return $this;
     }
+
+    public function map()
+    {
+        return [
+            Constants::CURRENT_ITEMS       => $this->getRawData(),
+            Constants::CURRENT_PAGE_NUMBER => $this->getCurrentPageNumber()->getValue(),
+            Constants::TOTAL_ITEM_COUNT    => $this->getTotalItemsCount()->getValue(),
+            Constants::ITEM_COUNT_PER_PAGE => $this->getItemsCountPerPage()->getValue(),
+            Constants::CURRENT_ITEM_COUNT  => $this->getCurrentItemsCount()->getValue(),
+            Constants::PAGE_COUNT          => $this->getPageCount()->getValue(),
+        ];
+    }
 }
