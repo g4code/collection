@@ -120,4 +120,16 @@ class PaginatedCollection extends Collection implements \Iterator, \Countable
         $this->totalItemsCount = $totalItemsCount;
         return $this;
     }
+
+    public function map()
+    {
+        return [
+            Constants::CURRENT_ITEMS       => $this->getRawData(),
+            Constants::CURRENT_PAGE_NUMBER => $this->getCurrentPageNumber(),
+            Constants::TOTAL_ITEM_COUNT    => $this->getTotalItemsCount(),
+            Constants::ITEM_COUNT_PER_PAGE => $this->getItemsCountPerPage(),
+            Constants::CURRENT_ITEM_COUNT  => $this->getCurrentItemsCount(),
+            Constants::PAGE_COUNT          => $this->getPageCount(),
+        ];
+    }
 }
