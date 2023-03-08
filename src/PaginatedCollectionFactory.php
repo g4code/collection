@@ -30,8 +30,6 @@ class PaginatedCollectionFactory
     {
         $collection = new PaginatedCollection([], $factory);
         $collection
-            ->setCurrentItemsCount($collection->getCurrentItemsCount())
-            ->setTotalItemsCount($collection->getTotalItemsCount())
             ->setItemsCountPerPage($pagination->getPerPage())
             ->setCurrentPageNumber($pagination->getPage());
         return $collection;
