@@ -26,12 +26,12 @@ class Pagination
             ? $params[Parameters::PER_PAGE] : self::DEFAULT_PER_PAGE;
     }
 
-    public function getPage(): int
+    public function getPage()
     {
         return $this->page;
     }
 
-    public function getPerPage(): int
+    public function getPerPage()
     {
         return $this->perPage;
     }
