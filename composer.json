@@ -36,7 +36,8 @@
     },
     "require": {
         "g4/factory"        : "1.*",
-        "g4/value-object"   : "*"
+        "g4/value-object"   : "*",
+        "g4/data-repository": "^1.7"
     },
     "scripts": {
         "unit-test": [

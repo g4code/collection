@@ -127,4 +127,12 @@ class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
         $mock = $this->getMockBuilder('Domain')->getMock();
         return $mock;
     }
+
+    public function testCreateEmptyCollection()
+    {
+        $result = new PaginatedCollection([], $this->getMockForFactoryReconstituteInterface());
+
+        $this->assertEquals(0, $result->getCurrentItemsCount());
+        $this->assertEquals(0, $result->getTotalItemsCount());
+    }
 }
