@@ -8,27 +8,27 @@ class PaginatedCollection extends Collection implements \Iterator, \Countable
     /**
      * @var int
      */
-    private $currentItemsCount;
+    private $currentItemsCount = 0;
 
     /**
      * @var int
      */
-    private $currentPageNumber;
+    private $currentPageNumber = 1;
 
     /**
      * @var int
      */
-    private $itemsCountPerPage;
+    private $itemsCountPerPage = 0;
 
     /**
      * @var int
      */
-    private $pageCount;
+    private $pageCount = 0;
 
     /**
      * @var int
      */
-    private $totalItemsCount;
+    private $totalItemsCount = 0;
 
 
     /**
