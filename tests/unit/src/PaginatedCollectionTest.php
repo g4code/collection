@@ -2,31 +2,21 @@
 
 use G4\Collection\PaginatedCollection;
 use G4\ValueObject\Dictionary;
+use PHPUnit\Framework\MockObject\MockObject;
 
-class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
+class PaginatedCollectionTest extends \PHPUnit\Framework\TestCase
 {
 
-    /**
-     * @var PaginatedCollection
-     */
-    private $collection;
+    private ?PaginatedCollection $collection = null;
 
-    /**
-     * @var array
-     */
-    private $dataMock;
+    private ?MockObject $dataMock = null;
 
-    /**
-     * @var int
-     */
-    private $fixture;
+    private ?int $fixture = null;
 
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->dataMock = $this->getMockBuilder(Dictionary::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->dataMock = $this->createMock(Dictionary::class);
 
         $this->fixture = 23;
 
@@ -44,47 +34,50 @@ class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
                 ]
             ]);
 
-        $this->collection = new PaginatedCollection($this->dataMock->getAll(), $this->getMockForFactoryReconstituteInterface());
+        $this->collection = new PaginatedCollection(
+            $this->dataMock->getAll(),
+            $this->getMockForFactoryReconstituteInterface()
+        );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->fixture      = null;
         $this->dataMock     = null;
         $this->collection   = null;
     }
 
-    public function testCurrentItemsCount()
+    public function testCurrentItemsCount(): void
     {
         $this->collection->setCurrentItemsCount($this->fixture);
         $this->assertEquals($this->fixture, $this->collection->getCurrentItemsCount());
     }
 
-    public function testCurrentPageNumber()
+    public function testCurrentPageNumber(): void
     {
         $this->collection->setCurrentPageNumber($this->fixture);
         $this->assertEquals($this->fixture, $this->collection->getCurrentPageNumber());
     }
 
-    public function testItemsCountPerPage()
+    public function testItemsCountPerPage(): void
     {
         $this->collection->setItemsCountPerPage($this->fixture);
         $this->assertEquals($this->fixture, $this->collection->getItemsCountPerPage());
     }
 
-    public function testPageCount()
+    public function testPageCount(): void
     {
         $this->collection->setPageCount($this->fixture);
         $this->assertEquals($this->fixture, $this->collection->getPageCount());
     }
 
-    public function testTotalItemsCount()
+    public function testTotalItemsCount(): void
     {
         $this->collection->setTotalItemsCount($this->fixture);
         $this->assertEquals($this->fixture, $this->collection->getTotalItemsCount());
     }
 
-    public function testMap()
+    public function testMap(): void
     {
         $this->collection->setCurrentPageNumber($this->fixture);
         $this->collection->setTotalItemsCount($this->fixture);
@@ -106,9 +99,7 @@ class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
 
     private function getMockForFactoryReconstituteInterface()
     {
-        $mock = $this->getMockBuilder('\G4\Factory\ReconstituteInterface')
-            ->setMethods(['set', 'reconstitute'])
-            ->getMock('\G4\Factory\ReconstituteInterface');
+        $mock = $this->createMock(\G4\Factory\ReconstituteInterface::class);
 
         $mock
             ->expects($this->any())
@@ -124,11 +115,10 @@ class PaginatedCollectionTest extends PHPUnit_Framework_TestCase
 
     private function getMockForDomainEntity()
     {
-        $mock = $this->getMockBuilder('Domain')->getMock();
-        return $mock;
+        return $this->getMockBuilder('Domain')->getMock();
     }
 
-    public function testCreateEmptyCollection()
+    public function testCreateEmptyCollection(): void
     {
         $result = new PaginatedCollection([], $this->getMockForFactoryReconstituteInterface());
 

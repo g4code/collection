@@ -5,36 +5,21 @@ namespace G4\Collection;
 class PaginatedCollection extends Collection implements \Iterator, \Countable
 {
 
-    /**
-     * @var int
-     */
-    private $currentItemsCount = 0;
+    private int $currentItemsCount = 0;
 
-    /**
-     * @var int
-     */
-    private $currentPageNumber = 1;
+    private int $currentPageNumber = 1;
 
-    /**
-     * @var int
-     */
-    private $itemsCountPerPage = 0;
+    private int $itemsCountPerPage = 0;
 
-    /**
-     * @var int
-     */
-    private $pageCount = 0;
+    private int $pageCount = 0;
 
-    /**
-     * @var int
-     */
-    private $totalItemsCount = 0;
+    private int $totalItemsCount = 0;
 
 
     /**
      * @return int
      */
-    public function getCurrentItemsCount()
+    public function getCurrentItemsCount(): int
     {
         return $this->currentItemsCount;
     }
@@ -42,7 +27,7 @@ class PaginatedCollection extends Collection implements \Iterator, \Countable
     /**
      * @return int
      */
-    public function getCurrentPageNumber()
+    public function getCurrentPageNumber(): int
     {
         return $this->currentPageNumber;
     }
@@ -50,7 +35,7 @@ class PaginatedCollection extends Collection implements \Iterator, \Countable
     /**
      * @return int
      */
-    public function getItemsCountPerPage()
+    public function getItemsCountPerPage(): int
     {
         return $this->itemsCountPerPage;
     }
@@ -58,7 +43,7 @@ class PaginatedCollection extends Collection implements \Iterator, \Countable
     /**
      * @return int
      */
-    public function getPageCount()
+    public function getPageCount(): int
     {
         return $this->pageCount;
     }
@@ -66,62 +51,42 @@ class PaginatedCollection extends Collection implements \Iterator, \Countable
     /**
      * @return int
      */
-    public function getTotalItemsCount()
+    public function getTotalItemsCount(): int
     {
         return $this->totalItemsCount;
     }
 
-    /**
-     * @param $currentItemsCount int
-     * @return $this
-     */
-    public function setCurrentItemsCount($currentItemsCount)
+    public function setCurrentItemsCount(int $currentItemsCount): self
     {
         $this->currentItemsCount = $currentItemsCount;
         return $this;
     }
 
-    /**
-     * @param $currentPageNumber int
-     * @return $this
-     */
-    public function setCurrentPageNumber($currentPageNumber)
+    public function setCurrentPageNumber(int $currentPageNumber): self
     {
         $this->currentPageNumber = $currentPageNumber;
         return $this;
     }
 
-    /**
-     * @param $itemsCountPerPage int
-     * @return $this
-     */
-    public function setItemsCountPerPage($itemsCountPerPage)
+    public function setItemsCountPerPage(int $itemsCountPerPage): self
     {
         $this->itemsCountPerPage = $itemsCountPerPage;
         return $this;
     }
 
-    /**
-     * @param $pageCount int
-     * @return $this
-     */
-    public function setPageCount($pageCount)
+    public function setPageCount(int $pageCount): self
     {
         $this->pageCount = $pageCount;
         return $this;
     }
 
-    /**
-     * @param $totalItemsCount int
-     * @return $this
-     */
-    public function setTotalItemsCount($totalItemsCount)
+    public function setTotalItemsCount(int $totalItemsCount): self
     {
         $this->totalItemsCount = $totalItemsCount;
         return $this;
     }
 
-    public function map()
+    public function map(): array
     {
         return [
             Constants::CURRENT_ITEMS       => $this->getRawData(),

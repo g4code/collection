@@ -8,53 +8,23 @@ use G4\Factory\ReconstituteInterface;
 class Collection implements \Iterator, \Countable
 {
 
-    /**
-     * @var ReconstituteInterface
-     */
-    private $factory;
+    private array $keyMap;
 
-    /**
-     * @var array
-     */
-    private $keyMap;
+    private array $objects = [];
 
-    /**
-     * @var array
-     */
-    private $objects;
+    private int $pointer = 0;
 
-    /**
-     * @var int
-     */
-    private $pointer;
+    private array $rawData;
 
-    /**
-     * @var array
-     */
-    private $rawData;
+    private ?int $total = null;
 
-    /**
-     * @var int
-     */
-    private $total;
-
-    /**
-     * @param array $rawData
-     * @param ReconstituteInterface $factory
-     */
-    public function __construct(array $rawData, ReconstituteInterface $factory)
+    public function __construct(array $rawData, private readonly ReconstituteInterface $factory)
     {
-        $this->factory = $factory;
         $this->keyMap  = array_keys($rawData);
-        $this->objects = [];
-        $this->pointer = 0;
         $this->rawData = $rawData;
     }
 
-    /**
-     * @return int
-     */
-    public function count()
+    public function count(): int
     {
         if ($this->total === null) {
             $this->total = count($this->rawData);
@@ -62,10 +32,7 @@ class Collection implements \Iterator, \Countable
         return $this->total;
     }
 
-    /**
-     * @return mixed|null
-     */
-    public function current()
+    public function current(): mixed
     {
         if ($this->pointer >= $this->count()) {
             return null;
@@ -77,110 +44,81 @@ class Collection implements \Iterator, \Countable
             $this->addCurrentRawDataToObjects();
             return $this->currentObject();
         }
+
+        return null;
     }
 
-    /**
-     * @return array
-     */
-    public function getRawData()
+    public function getRawData(): array
     {
         return $this->rawData;
     }
 
-    /**
-     * @return array
-     */
-    public function getKeyMap()
+    public function getKeyMap(): array
     {
         return $this->keyMap;
     }
 
-    /**
-     * @return $this
-     */
-    public function keyMapReverseOrder()
+    public function keyMapReverseOrder(): self
     {
         $this->keyMap = array_reverse($this->keyMap);
         return $this;
     }
 
-    /**
-     * @param ArrayList $algorithmList
-     * @return $this
-     */
-    public function reduce(ArrayList $algorithmList)
+    public function reduce(ArrayList $algorithmList): self
     {
         $this->keyMap = array_values($algorithmList->getAll());
         return $this;
     }
 
-    public function hasData()
+    public function hasData(): bool
     {
         return $this->count() > 0;
     }
 
-    /**
-     * @return int
-     */
-    public function key()
+    public function key(): mixed
     {
         return $this->pointer;
     }
 
-    public function next()
+    public function next(): void
     {
         if ($this->pointer < $this->count()) {
             $this->pointer++;
         }
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->pointer = 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function valid()
+    public function valid(): bool
     {
         return $this->current() !== null;
     }
 
-    private function addCurrentRawDataToObjects()
+    private function addCurrentRawDataToObjects(): void
     {
         $this->factory->set($this->currentRawData());
         $this->objects[$this->pointer] = $this->factory->reconstitute();
     }
 
-    /**
-     * @return array
-     */
-    private function currentRawData()
+    private function currentRawData(): array
     {
         return $this->rawData[$this->keyMap[$this->pointer]];
     }
 
-    /**
-     * @return bool
-     */
-    private function hasCurrentObject()
+    private function hasCurrentObject(): bool
     {
         return isset($this->objects[$this->pointer]);
     }
 
-    /**
-     * @return bool
-     */
-    private function hasCurrentRawData()
+    private function hasCurrentRawData(): bool
     {
         return isset($this->keyMap[$this->pointer]) && isset($this->rawData[$this->keyMap[$this->pointer]]);
     }
 
-    /**
-     * @return mixed|null
-     */
-    private function currentObject()
+    private function currentObject(): mixed
     {
         return $this->hasCurrentObject()
             ? $this->objects[$this->pointer]

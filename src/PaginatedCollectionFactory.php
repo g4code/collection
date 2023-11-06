@@ -9,17 +9,13 @@ use G4\Factory\ReconstituteInterface;
 class PaginatedCollectionFactory
 {
     /**
-     * @param DataRepositoryResponse $response
-     * @param ReconstituteInterface $factory
-     * @param Pagination $pagination
-     * @return PaginatedCollection
      * @throws MissingResponseAllDataException
      */
     public static function create(
         DataRepositoryResponse $response,
         ReconstituteInterface  $factory,
         Pagination             $pagination
-    ) {
+    ): PaginatedCollection {
         $collection = new PaginatedCollection($response->getAll(), $factory);
         $collection
             ->setItemsCountPerPage($pagination->getPerPage())
@@ -30,12 +26,7 @@ class PaginatedCollectionFactory
         return $collection;
     }
 
-    /**
-     * @param ReconstituteInterface $factory
-     * @param Pagination $pagination
-     * @return PaginatedCollection
-     */
-    public static function createEmpty(ReconstituteInterface $factory, Pagination $pagination)
+    public static function createEmpty(ReconstituteInterface $factory, Pagination $pagination): PaginatedCollection
     {
         $collection = new PaginatedCollection([], $factory);
         $collection

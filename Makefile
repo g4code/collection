@@ -8,6 +8,10 @@ unit-tests:
 	@/bin/echo -e "${TITLE} testing suite started..." \
 	&& vendor/bin/phpunit -c tests/unit/phpunit.xml --coverage-html tests/unit/coverage
 
+psalm-check:
+	@/bin/echo -e "${TITLE} psalm check started..." \
+	&& php ./vendor/bin/psalm --no-cache --show-info=false
+
 
 ##############################################################################################
 ####################################### C O M P O S E R ######################################
