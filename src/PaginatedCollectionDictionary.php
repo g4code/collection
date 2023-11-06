@@ -41,31 +41,31 @@ class PaginatedCollectionDictionary extends CollectionDictionary implements \Ite
         return $this->totalItemsCount;
     }
 
-    public function setCurrentItemsCount(IntegerNumber $currentItemsCount): static
+    public function setCurrentItemsCount(IntegerNumber $currentItemsCount): self
     {
         $this->currentItemsCount = $currentItemsCount;
         return $this;
     }
 
-    public function setCurrentPageNumber(IntegerNumber $currentPageNumber): static
+    public function setCurrentPageNumber(IntegerNumber $currentPageNumber): self
     {
         $this->currentPageNumber = $currentPageNumber;
         return $this;
     }
 
-    public function setItemsCountPerPage(IntegerNumber $itemsCountPerPage): static
+    public function setItemsCountPerPage(IntegerNumber $itemsCountPerPage): self
     {
         $this->itemsCountPerPage = $itemsCountPerPage;
         return $this;
     }
 
-    public function setPageCount(IntegerNumber $pageCount): static
+    public function setPageCount(IntegerNumber $pageCount): self
     {
         $this->pageCount = $pageCount;
         return $this;
     }
 
-    public function setTotalItemsCount(IntegerNumber $totalItemsCount): static
+    public function setTotalItemsCount(IntegerNumber $totalItemsCount): self
     {
         $this->totalItemsCount = $totalItemsCount;
         return $this;
@@ -75,11 +75,11 @@ class PaginatedCollectionDictionary extends CollectionDictionary implements \Ite
     {
         return [
             Constants::CURRENT_ITEMS       => $this->getRawData(),
-            Constants::CURRENT_PAGE_NUMBER => $this->getCurrentPageNumber()?->getValue(),
-            Constants::TOTAL_ITEM_COUNT    => $this->getTotalItemsCount()?->getValue(),
-            Constants::ITEM_COUNT_PER_PAGE => $this->getItemsCountPerPage()?->getValue(),
-            Constants::CURRENT_ITEM_COUNT  => $this->getCurrentItemsCount()?->getValue(),
-            Constants::PAGE_COUNT          => $this->getPageCount()?->getValue(),
+            Constants::CURRENT_PAGE_NUMBER => $this->getCurrentPageNumber()->getValue(),
+            Constants::TOTAL_ITEM_COUNT    => $this->getTotalItemsCount()->getValue(),
+            Constants::ITEM_COUNT_PER_PAGE => $this->getItemsCountPerPage()->getValue(),
+            Constants::CURRENT_ITEM_COUNT  => $this->getCurrentItemsCount()->getValue(),
+            Constants::PAGE_COUNT          => $this->getPageCount()->getValue(),
         ];
     }
 }

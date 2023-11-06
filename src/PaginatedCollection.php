@@ -56,31 +56,31 @@ class PaginatedCollection extends Collection implements \Iterator, \Countable
         return $this->totalItemsCount;
     }
 
-    public function setCurrentItemsCount(int $currentItemsCount): static
+    public function setCurrentItemsCount(int $currentItemsCount): self
     {
         $this->currentItemsCount = $currentItemsCount;
         return $this;
     }
 
-    public function setCurrentPageNumber(int $currentPageNumber): static
+    public function setCurrentPageNumber(int $currentPageNumber): self
     {
         $this->currentPageNumber = $currentPageNumber;
         return $this;
     }
 
-    public function setItemsCountPerPage(int $itemsCountPerPage): static
+    public function setItemsCountPerPage(int $itemsCountPerPage): self
     {
         $this->itemsCountPerPage = $itemsCountPerPage;
         return $this;
     }
 
-    public function setPageCount(int $pageCount): static
+    public function setPageCount(int $pageCount): self
     {
         $this->pageCount = $pageCount;
         return $this;
     }
 
-    public function setTotalItemsCount(int $totalItemsCount): static
+    public function setTotalItemsCount(int $totalItemsCount): self
     {
         $this->totalItemsCount = $totalItemsCount;
         return $this;

@@ -107,13 +107,13 @@ class CollectionDictionary implements \Iterator, \Countable
         return $this->keyMap;
     }
 
-    public function keyMapReverseOrder(): static
+    public function keyMapReverseOrder(): self
     {
         $this->keyMap = array_reverse($this->keyMap);
         return $this;
     }
 
-    public function reduce(ArrayList $arrayList): static
+    public function reduce(ArrayList $arrayList): self
     {
         $this->keyMap = array_values($arrayList->getAll());
         return $this;

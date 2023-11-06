@@ -58,13 +58,13 @@ class Collection implements \Iterator, \Countable
         return $this->keyMap;
     }
 
-    public function keyMapReverseOrder(): static
+    public function keyMapReverseOrder(): self
     {
         $this->keyMap = array_reverse($this->keyMap);
         return $this;
     }
 
-    public function reduce(ArrayList $algorithmList): static
+    public function reduce(ArrayList $algorithmList): self
     {
         $this->keyMap = array_values($algorithmList->getAll());
         return $this;
@@ -75,7 +75,7 @@ class Collection implements \Iterator, \Countable
         return $this->count() > 0;
     }
 
-    public function key(): int
+    public function key(): mixed
     {
         return $this->pointer;
     }

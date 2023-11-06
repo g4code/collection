@@ -18,4 +18,5 @@ composer.lock
 
 tests/unit/coverage/*
 tests/unit/.phpunit.result.cache
+tests/unit/.phpunit.cache/*
 *.DS_Store
