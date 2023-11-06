@@ -5,20 +5,15 @@ namespace G4\Collection;
 use G4\ValueObject\ArrayList;
 use G4\ValueObject\Dictionary;
 use G4\Factory\ReconstituteInterface;
+use ReturnTypeWillChange;
 
 class CollectionDictionary implements \Iterator, \Countable
 {
     private ?int $total = null;
 
-    /**
-     * @var array
-     */
-    private $keyMap;
+    private array $keyMap;
 
-    /**
-     * @var array
-     */
-    private $rawData;
+    private array $rawData;
 
     private int $pointer = 0;
 
@@ -35,7 +30,7 @@ class CollectionDictionary implements \Iterator, \Countable
         $this->rawData = $dictionary->getAll();
     }
 
-    public function count(): ?int
+    public function count(): int
     {
         if ($this->total === null) {
             $this->total = count($this->dictionary->getAll());
@@ -90,7 +85,8 @@ class CollectionDictionary implements \Iterator, \Countable
     /**
      * Rewind the Iterator to the first element
      */
-    public function rewind(): static
+    #[ReturnTypeWillChange]
+    public function rewind()
     {
         $this->pointer = 0;
         return $this;

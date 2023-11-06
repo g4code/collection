@@ -4,7 +4,6 @@ namespace G4\Collection;
 
 use G4\ValueObject\ArrayList;
 use G4\Factory\ReconstituteInterface;
-use ReturnTypeWillChange;
 
 class Collection implements \Iterator, \Countable
 {
@@ -25,7 +24,7 @@ class Collection implements \Iterator, \Countable
         $this->rawData = $rawData;
     }
 
-    public function count(): ?int
+    public function count(): int
     {
         if ($this->total === null) {
             $this->total = count($this->rawData);
