@@ -6,130 +6,80 @@ use G4\ValueObject\IntegerNumber;
 
 class PaginatedCollectionDictionary extends CollectionDictionary implements \Iterator, \Countable
 {
-    /**
-     * @var IntegerNumber
-     */
-    private $currentItemsCount;
+    private ?IntegerNumber $currentItemsCount = null;
 
-    /**
-     * @var IntegerNumber
-     */
-    private $currentPageNumber;
+    private ?IntegerNumber $currentPageNumber = null;
 
-    /**
-     * @var IntegerNumber
-     */
-    private $itemsCountPerPage;
+    private ?IntegerNumber $itemsCountPerPage = null;
 
-    /**
-     * @var IntegerNumber
-     */
-    private $pageCount;
+    private ?IntegerNumber $pageCount = null;
 
-    /**
-     * @var IntegerNumber
-     */
-    private $totalItemsCount;
+    private ?IntegerNumber $totalItemsCount = null;
 
-    /**
-     * @return IntegerNumber
-     */
-    public function getCurrentItemsCount()
+    public function getCurrentItemsCount(): ?IntegerNumber
     {
         return $this->currentItemsCount;
     }
 
-    /**
-     * @return IntegerNumber
-     */
-    public function getCurrentPageNumber()
+    public function getCurrentPageNumber(): ?IntegerNumber
     {
         return $this->currentPageNumber;
     }
 
-    /**
-     * @return IntegerNumber
-     */
-    public function getItemsCountPerPage()
+    public function getItemsCountPerPage(): ?IntegerNumber
     {
         return $this->itemsCountPerPage;
     }
 
-    /**
-     * @return IntegerNumber
-     */
-    public function getPageCount()
+    public function getPageCount(): ?IntegerNumber
     {
         return $this->pageCount;
     }
 
-    /**
-     * @return IntegerNumber
-     */
-    public function getTotalItemsCount()
+    public function getTotalItemsCount(): ?IntegerNumber
     {
         return $this->totalItemsCount;
     }
 
-    /**
-     * @param IntegerNumber $currentItemsCount
-     * @return $this
-     */
-    public function setCurrentItemsCount(IntegerNumber $currentItemsCount)
+    public function setCurrentItemsCount(IntegerNumber $currentItemsCount): static
     {
         $this->currentItemsCount = $currentItemsCount;
         return $this;
     }
 
-    /**
-     * @param IntegerNumber $currentPageNumber
-     * @return $this
-     */
-    public function setCurrentPageNumber(IntegerNumber $currentPageNumber)
+    public function setCurrentPageNumber(IntegerNumber $currentPageNumber): static
     {
         $this->currentPageNumber = $currentPageNumber;
         return $this;
     }
 
-    /**
-     * @param IntegerNumber $itemsCountPerPage
-     * @return $this
-     */
-    public function setItemsCountPerPage(IntegerNumber $itemsCountPerPage)
+    public function setItemsCountPerPage(IntegerNumber $itemsCountPerPage): static
     {
         $this->itemsCountPerPage = $itemsCountPerPage;
         return $this;
     }
 
-    /**
-     * @param IntegerNumber $pageCount
-     * @return $this
-     */
-    public function setPageCount(IntegerNumber $pageCount)
+    public function setPageCount(IntegerNumber $pageCount): static
     {
         $this->pageCount = $pageCount;
         return $this;
     }
 
-    /**
-     * @param IntegerNumber $totalItemsCount
-     * @return $this
-     */
-    public function setTotalItemsCount(IntegerNumber $totalItemsCount)
+    public function setTotalItemsCount(IntegerNumber $totalItemsCount): static
     {
         $this->totalItemsCount = $totalItemsCount;
         return $this;
     }
 
-    public function map()
+    public function map(): array
     {
         return [
             Constants::CURRENT_ITEMS       => $this->getRawData(),
-            Constants::CURRENT_PAGE_NUMBER => $this->getCurrentPageNumber()->getValue(),
-            Constants::TOTAL_ITEM_COUNT    => $this->getTotalItemsCount()->getValue(),
-            Constants::ITEM_COUNT_PER_PAGE => $this->getItemsCountPerPage()->getValue(),
-            Constants::CURRENT_ITEM_COUNT  => $this->getCurrentItemsCount()->getValue(),
-            Constants::PAGE_COUNT          => $this->getPageCount()->getValue(),
+            Constants::CURRENT_PAGE_NUMBER => $this->getCurrentPageNumber()?->getValue(),
+            Constants::TOTAL_ITEM_COUNT    => $this->getTotalItemsCount()?->getValue(),
+            Constants::ITEM_COUNT_PER_PAGE => $this->getItemsCountPerPage()?->getValue(),
+            Constants::CURRENT_ITEM_COUNT  => $this->getCurrentItemsCount()?->getValue(),
+            Constants::PAGE_COUNT          => $this->getPageCount()?->getValue(),
         ];
     }
 }

@@ -3,21 +3,15 @@
 use G4\ValueObject\ArrayList;
 use G4\Collection\Collection;
 
-class CollectionTest extends PHPUnit_Framework_TestCase
+class CollectionTest extends \PHPUnit\Framework\TestCase
 {
 
-    /**
-     * @var Collection
-     */
-    private $collection;
+    private ?Collection $collection = null;
 
-    /**
-     * @var array
-     */
-    private $data;
+    private ?array $data = null;
 
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->data = [
             0 => [
@@ -32,31 +26,31 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->collection = new Collection($this->data, $this->getMockForFactoryReconstituteInterface());
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
-        $this->data       = null;
+        $this->data = null;
         $this->collection = null;
     }
 
 
-    public function testCount()
+    public function testCount(): void
     {
         $this->assertEquals(2, count($this->collection));
         $this->assertEquals(0, count(new Collection([], $this->getMockForFactoryReconstituteInterface())));
     }
 
-    public function testCurrent()
+    public function testCurrent(): void
     {
         $this->assertEquals($this->getMockForDomainEntity(), $this->collection->current());
         $this->assertEquals(0, $this->collection->key());
     }
 
-    public function testGetRawData()
+    public function testGetRawData(): void
     {
         $this->assertEquals($this->data, $this->collection->getRawData());
     }
 
-    public function testHasData()
+    public function testHasData(): void
     {
         $this->assertTrue($this->collection->hasData());
 
@@ -64,10 +58,10 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($collection->hasData());
     }
 
-    public function testIteration()
+    public function testIteration(): void
     {
         $domains = [];
-        foreach($this->collection as $domain) {
+        foreach ($this->collection as $domain) {
             $domains[] = $domain;
         }
         $this->assertEquals(2, count($domains));
@@ -75,26 +69,26 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->getMockForDomainEntity(), $domains[1]);
     }
 
-    public function testKeyMapReverseOrder()
+    public function testKeyMapReverseOrder(): void
     {
-        $this->assertEquals([0=>0, 1=>2], $this->collection->getKeyMap());
+        $this->assertEquals([0 => 0, 1 => 2], $this->collection->getKeyMap());
 
         $this->collection->keyMapReverseOrder();
-        $this->assertEquals([0=>2, 1=>0], $this->collection->getKeyMap());
+        $this->assertEquals([0 => 2, 1 => 0], $this->collection->getKeyMap());
     }
 
-    public function testIterationReduced()
+    public function testIterationReduced(): void
     {
         $this->collection->reduce(new ArrayList([2]));
         $domains = [];
-        foreach($this->collection as $domain) {
+        foreach ($this->collection as $domain) {
             $domains[] = $domain;
         }
         $this->assertEquals(1, count($domains));
         $this->assertEquals($this->getMockForDomainEntity(), $domains[0]);
-}
+    }
 
-    public function testNext()
+    public function testNext(): void
     {
         $this->collection->next();
         $this->assertEquals(1, $this->collection->key());
@@ -103,13 +97,13 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $this->collection->key());
     }
 
-    public function testRewind()
+    public function testRewind(): void
     {
         $this->collection->rewind();
         $this->assertEquals(0, $this->collection->key());
     }
 
-    public function testValid()
+    public function testValid(): void
     {
         $this->assertTrue($this->collection->valid());
         $this->collection->next();
@@ -120,9 +114,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase
 
     private function getMockForFactoryReconstituteInterface()
     {
-        $mock = $this->getMockBuilder('\G4\Factory\ReconstituteInterface')
-            ->setMethods(['set', 'reconstitute'])
-            ->getMock('\G4\Factory\ReconstituteInterface');
+        $mock = $this->createMock(\G4\Factory\ReconstituteInterface::class);
 
         $mock
             ->expects($this->any())
@@ -138,7 +130,6 @@ class CollectionTest extends PHPUnit_Framework_TestCase
 
     private function getMockForDomainEntity()
     {
-        $mock = $this->getMockBuilder('Domain')->getMock();
-        return $mock;
+        return $this->getMockBuilder('Domain')->getMock();
     }
 }

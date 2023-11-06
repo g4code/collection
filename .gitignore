@@ -17,4 +17,5 @@ composer.lock
 .idea
 
 tests/unit/coverage/*
+tests/unit/.phpunit.result.cache
 *.DS_Store
